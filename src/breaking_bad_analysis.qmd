@@ -1,6 +1,6 @@
 ---
 title: "Breaking Bad Viewership Analysis"
-author: "Data Analysis Report"
+author: "Krzysztof Wojdalski"
 format: 
   html:
     theme: cosmo
@@ -12,7 +12,6 @@ jupyter:
     display_name: Python 3
     language: python
     name: python3
-
 ---
 
 ```{python}
@@ -26,11 +25,11 @@ from plotnine import ggplot, aes, geom_line, theme, element_text, element_blank,
 
 
 # Show Description
-
-**Breaking Bad** is a critically acclaimed American television series created by 
-*Vince Gilligan*. The show follows the transformation of *Walter White* (played 
-by *Bryan Cranston*), a high school chemistry teacher turned methamphetamine 
-manufacturer, and his former student *Jesse Pinkman* (played by *Aaron Paul*).
+**Breaking Bad** represents a highly acclaimed American television drama series 
+developed by *Vince Gilligan*. The narrative chronicles the metamorphosis of 
+*Walter White* (portrayed by *Bryan Cranston*), a secondary education chemistry 
+instructor who transitions into methamphetamine production, alongside his 
+previous pupil *Jesse Pinkman* (portrayed by *Aaron Paul*).
 
 ![Breaking Bad Logo](https://upload.wikimedia.org/wikipedia/commons/7/77/Breaking_Bad_logo.svg)
 
@@ -38,8 +37,10 @@ manufacturer, and his former student *Jesse Pinkman* (played by *Aaron Paul*).
 
 ## Overall Performance
 
-The show aired from 2008 to 2013, spanning 5 seasons and 62 episodes. Here are 
-some key statistics:
+The show aired from *2008* to *2013*, spanning *5 seasons* and *62 episodes*. 
+Here are some key statistics:
+
+
 
 ```{python}
 #| label: create-data
@@ -61,11 +62,11 @@ peak_viewership = viewership_data['Viewers'].max()
 total_growth = viewership_data['Viewers'].max() - viewership_data['Viewers'].min()
 ```
 
-- Average viewership per episode: {{ '{:.1f}'.format(avg_viewership) }} million
-- Peak viewership: {{ '{:.1f}'.format(peak_viewership) }} million (Series Finale)
-- Total growth: {{ '{:.1f}'.format(total_growth) }} million viewers
-- Average IMDb rating: 9.5/10
-- Total Emmy Awards: 16
+- Average viewership per episode: **`{python} '{:.1f}'.format(avg_viewership)`** million
+- Peak viewership: **`{python} '{:.1f}'.format(peak_viewership)`** million (Series Finale)
+- Total growth: **`{python} '{:.1f}'.format(total_growth)`** million viewers
+- Average IMDb rating: **9.5/10**
+- Total Emmy Awards: **16**
 
 ## Viewership Over Time
 
@@ -91,6 +92,7 @@ total_growth = viewership_data['Viewers'].max() - viewership_data['Viewers'].min
 #| fig-cap: "Viewership Changes Between Seasons"
 #| echo: false
 # Calculate season-to-season changes
+
 changes = pd.Series(viewership).diff().dropna()
 season_changes = [f'S{i}->S{i+1}' for i in range(1, 5)]
 
@@ -109,12 +111,14 @@ changes_data = pd.DataFrame({
 
 # Analysis of Viewership Trends
 The viewership of Breaking Bad showed a growth pattern throughout its run. 
-Starting with an average of {{ viewership[0] }} viewers in Season 1, the show 
-experienced steady growth, reaching {{ viewership[1]}} in Season 2. The most 
-significant increase occurred between Seasons 4 and 5, with a jump from 
-{{ viewership[3] }} to {{ viewership[4] }} viewers for the series finale.
+Starting with an average of **`{python} viewership[0]`** million viewers in Season 1, 
+the show experienced steady growth, reaching **`{python} viewership[1]`** million in 
+Season 2. The most significant increase occurred between Seasons 4 and 5, with a jump 
+from **`{python} viewership[3]`** million to **`{python} viewership[4]`** million viewers 
+for the series finale.
 
 The viewership growth can be attributed to multiple contributing factors:
+
 1. Critical acclaim and word-of-mouth
 2. Accessibility via digital streaming services (e.g., Netflix)
 3. Social Media Buzz
@@ -122,5 +126,4 @@ The viewership growth can be attributed to multiple contributing factors:
 
 The empirical evidence demonstrates that Breaking Bad experienced exponential 
 popularity growth, most notably during its concluding seasons, thus securing its 
-position among the most commercially successful television productions in 
-contemporary media history.
+position among the most commercially successful television productions in media history.
