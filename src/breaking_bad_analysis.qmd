@@ -54,7 +54,7 @@ peak_viewership = viewership_data['Viewers'].max()
 total_growth = viewership_data['Viewers'].max() - viewership_data['Viewers'].min()
 ```
 
-- Average viewership per episode: {avg_viewership:.1f} million
+- Average viewership per episode: {{ '{:.1f}'.format(avg_viewership) }} million
 - Peak viewership: {peak_viewership:.1f} million (Series Finale)
 - Total growth: {total_growth:.1f} million viewers
 - Average IMDb rating: 9.5/10
