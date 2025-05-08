@@ -24,9 +24,13 @@ from plotnine import ggplot, aes, geom_line, theme, element_text, element_blank,
 # Set the style for better-looking plots
 ```
 
+
 # Show Description
 
-**Breaking Bad** is a critically acclaimed American television series created by *Vince Gilligan*. The show follows the transformation of *Walter White* (played by *Bryan Cranston*), a high school chemistry teacher turned methamphetamine manufacturer, and his former student *Jesse Pinkman* (played by *Aaron Paul*).
+**Breaking Bad** is a critically acclaimed American television series created by 
+*Vince Gilligan*. The show follows the transformation of *Walter White* (played 
+by *Bryan Cranston*), a high school chemistry teacher turned methamphetamine 
+manufacturer, and his former student *Jesse Pinkman* (played by *Aaron Paul*).
 
 ![Breaking Bad Logo](https://upload.wikimedia.org/wikipedia/commons/7/77/Breaking_Bad_logo.svg)
 
@@ -34,7 +38,8 @@ from plotnine import ggplot, aes, geom_line, theme, element_text, element_blank,
 
 ## Overall Performance
 
-The show aired from 2008 to 2013, spanning 5 seasons and 62 episodes. Here are some key statistics:
+The show aired from 2008 to 2013, spanning 5 seasons and 62 episodes. Here are 
+some key statistics:
 
 ```{python}
 #| label: create-data
@@ -103,8 +108,11 @@ changes_data = pd.DataFrame({
 ```
 
 # Analysis of Viewership Trends
-
-The viewership of Breaking Bad showed a growth pattern throughout its run. Starting with an average of {{ viewership[0] }} viewers in Season 1, the show experienced steady growth, reaching {{ viewership[1]}} in Season 2. The most significant increase occurred between Seasons 4 and 5, with a jump from {{ viewership[3] }} to {{ viewership[4] }} viewers for the series finale.
+The viewership of Breaking Bad showed a growth pattern throughout its run. 
+Starting with an average of {{ viewership[0] }} viewers in Season 1, the show 
+experienced steady growth, reaching {{ viewership[1]}} in Season 2. The most 
+significant increase occurred between Seasons 4 and 5, with a jump from 
+{{ viewership[3] }} to {{ viewership[4] }} viewers for the series finale.
 
 The viewership growth can be attributed to multiple contributing factors:
 1. Critical acclaim and word-of-mouth
