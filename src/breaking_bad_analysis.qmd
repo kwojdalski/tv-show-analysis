@@ -7,19 +7,21 @@ format:
     toc: true
     toc-depth: 2
     number-sections: true
+jupyter:
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+
 ---
 
 ```{python}
 #| label: setup
-#| include: false
+#| echo: false
 
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-
+from plotnine import ggplot, aes, geom_line, theme, element_text, element_blank, scale_x_continuous, labs, geom_bar
 # Set the style for better-looking plots
-plt.style.use('seaborn-v0_8')
-sns.set_theme()
 ```
 
 # Show Description
@@ -36,7 +38,7 @@ The show aired from 2008 to 2013, spanning 5 seasons and 62 episodes. Here are s
 
 ```{python}
 #| label: create-data
-#| include: false
+#| echo: false
 
 # Create the viewership data
 seasons = list(range(1, 6))
@@ -55,8 +57,8 @@ total_growth = viewership_data['Viewers'].max() - viewership_data['Viewers'].min
 ```
 
 - Average viewership per episode: {{ '{:.1f}'.format(avg_viewership) }} million
-- Peak viewership: {peak_viewership:.1f} million (Series Finale)
-- Total growth: {total_growth:.1f} million viewers
+- Peak viewership: {{ '{:.1f}'.format(peak_viewership) }} million (Series Finale)
+- Total growth: {{ '{:.1f}'.format(total_growth) }} million viewers
 - Average IMDb rating: 9.5/10
 - Total Emmy Awards: 16
 
@@ -65,20 +67,16 @@ total_growth = viewership_data['Viewers'].max() - viewership_data['Viewers'].min
 ```{python}
 #| label: viewership-plot
 #| fig-cap: "Breaking Bad Viewership Trends (2008-2013)"
+#| echo: false
 
-plt.figure(figsize=(10, 6))
-plt.plot(viewership_data['Season'], 
-         viewership_data['Viewers'], 
-         marker='o', 
-         linewidth=2, 
-         color='#2E86C1')
 
-plt.title('Breaking Bad Viewership Trends (2008-2013)')
-plt.xlabel('Season')
-plt.ylabel('Viewers (millions)')
-plt.grid(True, alpha=0.3)
-plt.xticks(seasons)
-plt.show()
+(ggplot(viewership_data, aes(x='Season', y='Viewers')) +
+ geom_line(color='#2E86C1', size=2) +
+ labs(title='Breaking Bad Viewership Trends (2008-2013)', x='Season', y='Viewers (millions)') +
+ scale_x_continuous(breaks=seasons) +
+ theme(axis_text_x=element_text(rotation=90, hjust=0.5)) +
+ theme(panel_grid_major_x=element_blank(), panel_grid_minor_x=element_blank())
+)
 ```
 
 ## Season-to-Season Changes
@@ -86,36 +84,35 @@ plt.show()
 ```{python}
 #| label: changes-plot
 #| fig-cap: "Viewership Changes Between Seasons"
-
+#| echo: false
 # Calculate season-to-season changes
 changes = pd.Series(viewership).diff().dropna()
-season_changes = [f'S{i}→S{i+1}' for i in range(1, 5)]
+season_changes = [f'S{i}->S{i+1}' for i in range(1, 5)]
 
 changes_data = pd.DataFrame({
     'Season_Change': season_changes,
     'Change': changes
 })
 
-plt.figure(figsize=(10, 6))
-plt.bar(changes_data['Season_Change'], 
-        changes_data['Change'], 
-        color='#2E86C1')
-
-plt.title('Viewership Changes Between Seasons')
-plt.xlabel('Season Transition')
-plt.ylabel('Change in Viewers (millions)')
-plt.grid(True, alpha=0.3)
-plt.show()
+(ggplot(changes_data, aes(x='Season_Change', y='Change')) +
+ geom_bar(stat='identity', fill='#2E86C1') +
+ labs(title='Viewership Changes Between Seasons', x='Season Transition', y='Change in Viewers (millions)') +
+ theme(axis_text_x=element_text(rotation=90, hjust=0.5)) +
+ theme(panel_grid_major_x=element_blank(), panel_grid_minor_x=element_blank())
+)
 ```
 
 # Analysis of Viewership Trends
 
-The viewership of Breaking Bad showed a remarkable growth pattern throughout its run. Starting with an average of `1.2 million` viewers in Season 1, the show experienced steady growth, reaching `1.5 million` in Season 2. The most significant increase occurred between Seasons 4 and 5, with a jump from `2.2 million` to `10.3 million` viewers for the series finale.
+The viewership of Breaking Bad showed a growth pattern throughout its run. Starting with an average of {{ viewership[0] }} viewers in Season 1, the show experienced steady growth, reaching {{ viewership[1]}} in Season 2. The most significant increase occurred between Seasons 4 and 5, with a jump from {{ viewership[3] }} to {{ viewership[4] }} viewers for the series finale.
 
-This dramatic increase can be attributed to several factors:
+The viewership growth can be attributed to multiple contributing factors:
 1. Critical acclaim and word-of-mouth
-2. Availability on streaming platforms
-3. Social media buzz
-4. The show's reputation for quality storytelling
+2. Accessibility via digital streaming services (e.g., Netflix)
+3. Social Media Buzz
+4. The TV Show's established reputation 
 
-The data clearly shows that Breaking Bad's popularity grew exponentially, particularly in its final seasons, cementing its place as one of the most successful television series of all time.
+The empirical evidence demonstrates that Breaking Bad experienced exponential 
+popularity growth, most notably during its concluding seasons, thus securing its 
+position among the most commercially successful television productions in 
+contemporary media history.
