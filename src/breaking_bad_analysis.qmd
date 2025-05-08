@@ -9,12 +9,17 @@ format:
     number-sections: true
 ---
 
-```{r setup}
+```{python}
+#| label: setup
 #| include: false
-library(tidyverse)
-library(ggplot2)
-library(knitr)
-library(scales)
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Set the style for better-looking plots
+plt.style.use('seaborn-v0_8')
+sns.set_theme()
 ```
 
 # Show Description
@@ -29,64 +34,83 @@ library(scales)
 
 The show aired from 2008 to 2013, spanning 5 seasons and 62 episodes. Here are some key statistics:
 
-- Average viewership per episode: 2.5 million
-- Peak viewership: 10.3 million (Series Finale)
+```{python}
+#| label: create-data
+#| include: false
+
+# Create the viewership data
+seasons = list(range(1, 6))
+viewership = [1.2, 1.5, 1.8, 2.2, 10.3]  # in millions
+
+# Create DataFrame
+viewership_data = pd.DataFrame({
+    'Season': seasons,
+    'Viewers': viewership
+})
+
+# Calculate summary statistics
+avg_viewership = viewership_data['Viewers'].mean()
+peak_viewership = viewership_data['Viewers'].max()
+total_growth = viewership_data['Viewers'].max() - viewership_data['Viewers'].min()
+```
+
+- Average viewership per episode: {avg_viewership:.1f} million
+- Peak viewership: {peak_viewership:.1f} million (Series Finale)
+- Total growth: {total_growth:.1f} million viewers
 - Average IMDb rating: 9.5/10
 - Total Emmy Awards: 16
 
 ## Viewership Over Time
 
-```{r}
+```{python}
 #| label: viewership-plot
 #| fig-cap: "Breaking Bad Viewership Trends (2008-2013)"
 
-# Create sample data for demonstration
-seasons <- 1:5
-viewership <- c(1.2, 1.5, 1.8, 2.2, 10.3)  # in millions
+plt.figure(figsize=(10, 6))
+plt.plot(viewership_data['Season'], 
+         viewership_data['Viewers'], 
+         marker='o', 
+         linewidth=2, 
+         color='#2E86C1')
 
-viewership_data <- data.frame(
-  Season = seasons,
-  Viewers = viewership
-)
-
-ggplot(viewership_data, aes(x = Season, y = Viewers)) +
-  geom_line(size = 1.2, color = "#2E86C1") +
-  geom_point(size = 3, color = "#2E86C1") +
-  scale_y_continuous(labels = scales::comma) +
-  labs(x = "Season", y = "Viewers (millions)") +
-  theme_minimal() +
-  theme(
-    plot.title = element_text(hjust = 0.5),
-    axis.title = element_text(face = "bold")
-  )
+plt.title('Breaking Bad Viewership Trends (2008-2013)')
+plt.xlabel('Season')
+plt.ylabel('Viewers (millions)')
+plt.grid(True, alpha=0.3)
+plt.xticks(seasons)
+plt.show()
 ```
 
 ## Season-to-Season Changes
 
-```{r}
+```{python}
 #| label: changes-plot
 #| fig-cap: "Viewership Changes Between Seasons"
 
-# Calculate changes
-changes <- diff(viewership)
-changes_data <- data.frame(
-  Season_Change = paste("S", 1:4, "→S", 2:5, sep=""),
-  Change = changes
-)
+# Calculate season-to-season changes
+changes = pd.Series(viewership).diff().dropna()
+season_changes = [f'S{i}→S{i+1}' for i in range(1, 5)]
 
-ggplot(changes_data, aes(x = Season_Change, y = Change)) +
-  geom_bar(stat = "identity", fill = "#2E86C1") +
-  labs(x = "Season Transition", y = "Change in Viewers (millions)") +
-  theme_minimal() +
-  theme(
-    plot.title = element_text(hjust = 0.5),
-    axis.title = element_text(face = "bold")
-  )
+changes_data = pd.DataFrame({
+    'Season_Change': season_changes,
+    'Change': changes
+})
+
+plt.figure(figsize=(10, 6))
+plt.bar(changes_data['Season_Change'], 
+        changes_data['Change'], 
+        color='#2E86C1')
+
+plt.title('Viewership Changes Between Seasons')
+plt.xlabel('Season Transition')
+plt.ylabel('Change in Viewers (millions)')
+plt.grid(True, alpha=0.3)
+plt.show()
 ```
 
 # Analysis of Viewership Trends
 
-The viewership of Breaking Bad showed a remarkable growth pattern throughout its run. Starting with an average of **1.2 million** viewers in Season 1, the show experienced steady growth, reaching **1.5 million** in Season 2. The most significant increase occurred between Seasons 4 and 5, with a jump from **2.2 million** to **10.3 million** viewers for the series finale.
+The viewership of Breaking Bad showed a remarkable growth pattern throughout its run. Starting with an average of `1.2 million` viewers in Season 1, the show experienced steady growth, reaching `1.5 million` in Season 2. The most significant increase occurred between Seasons 4 and 5, with a jump from `2.2 million` to `10.3 million` viewers for the series finale.
 
 This dramatic increase can be attributed to several factors:
 1. Critical acclaim and word-of-mouth
